@@ -11,7 +11,19 @@ size_t vtrlen(void* ptr){
 }
 
 void* vtradd(void* ptr, void* item){
-    return NULL;
+    if(!ptr){
+        ptr = malloc(sizeof(void*) * 2);
+        void** aux = ptr;
+        aux[0] = item;
+        aux[1] = NULL;
+    }else{
+        size_t tamanio_anterior = vtrlen(ptr);
+        ptr = realloc(ptr, sizeof(void*) * (tamanio_anterior + 2));
+        void** aux = ptr;
+        aux[tamanio_anterior] = item;
+        aux[tamanio_anterior + 1] = NULL;
+    }
+    return ptr;
 }
 
 void vtrfree(void* ptr){
