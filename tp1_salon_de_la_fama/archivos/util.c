@@ -20,8 +20,10 @@ void* vtradd(void* ptr, void* item){
         size_t tamanio_anterior = vtrlen(ptr);
         ptr = realloc(ptr, sizeof(void*) * (tamanio_anterior + 2));
         void** aux = ptr;
-        aux[tamanio_anterior] = item;
-        aux[tamanio_anterior + 1] = NULL;
+        /*aux[tamanio_anterior] = item;
+        aux[tamanio_anterior + 1] = NULL;*/
+        (void**) ptr[tamanio_anterior] = item;
+        (void**) ptr[tamanio_anterior + 1] = NULL;
     }
     return ptr;
 }
