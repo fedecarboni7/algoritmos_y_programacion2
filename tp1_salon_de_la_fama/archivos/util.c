@@ -25,15 +25,34 @@ void vtrfree(void* ptr){
 
 char** split(const char* str, char separador){
     char** ptr = NULL;
+    char* palabra = malloc(sizeof(char*));
+    int contador;
+    size_t tamanio_str;
     size_t i;
-    char* palabra;
-    for(i = 0; i < strlen(str); i++){
+    size_t j;
+    if(str == NULL || str[0] == 0)
+        return NULL;
+    for(i = 0; i < strlen(str); i++){ //"Pikachu;;1;"
+        palabra = NULL;
+        tamanio_str = 0;
         while(str[i] != separador){
-            palabra += str[i];
+            tamanio_str++;
             i++;
         }
+        palabra = malloc(sizeof(char*)* tamanio_str + 1);
+        contador = 0;
+        for(j = i - tamanio_str; j <= i; j++){
+            palabra[contador] = str[j];
+            contador++;
+        }
+        palabra[tamanio_str] = '\0';
         ptr = vtradd(ptr, palabra);
-        palabra = NULL;
+    }
+    if(str[i+1] == 0){
+        palabra = malloc(sizeof(char*)* 2);
+        palabra[0] = 0;
+        palabra[1] = '\0';
+        ptr = vtradd(ptr, palabra);
     }
     return ptr;
 }
