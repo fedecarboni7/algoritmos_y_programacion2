@@ -32,7 +32,7 @@ char** split(const char* str, char separador){
     size_t j;
     if(str == NULL || str[0] == 0)
         return NULL;
-    for(i = 0; i < strlen(str); i++){ //"Pikachu;;1;"
+    for(i = 0; i < strlen(str); i++){
         palabra = NULL;
         tamanio_str = 0;
         while(str[i] != separador){
