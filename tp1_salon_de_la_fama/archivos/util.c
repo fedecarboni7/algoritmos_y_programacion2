@@ -64,10 +64,8 @@ char* fgets_alloc(FILE* archivo){
     size_t tamanio = 512;
     size_t bytes_leidos = 0;
     char* buffer = malloc(tamanio);
-
     if (!buffer)
         return NULL;
-
     while (fgets(buffer + bytes_leidos, (int)tamanio - (int)bytes_leidos, archivo)){
         size_t leido = strlen(buffer + bytes_leidos);
         if (leido > 0 && *(buffer + bytes_leidos + leido - 1) == '\n'){
@@ -83,12 +81,10 @@ char* fgets_alloc(FILE* archivo){
         }
         bytes_leidos += leido;
     }
-
     if(bytes_leidos == 0){
         free(buffer);
         return NULL;
     }
-
     return buffer;
 }
 
