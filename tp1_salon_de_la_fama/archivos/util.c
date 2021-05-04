@@ -20,7 +20,10 @@ void* vtradd(void* ptr, void* item){
 }
 
 void vtrfree(void* ptr){
-
+    for(int i = 0; i <= vtrlen(ptr); i++){
+        free(((void**)ptr)[i]);
+    }
+    free(ptr);
 }
 
 char** split(const char* str, char separador){
@@ -58,9 +61,38 @@ char** split(const char* str, char separador){
 }
 
 char* fgets_alloc(FILE* archivo){
-    return NULL;
+    size_t tamanio = 512;
+    size_t bytes_leidos = 0;
+    char* buffer = malloc(tamanio);
+
+    if (!buffer)
+        return NULL;
+
+    while (fgets(buffer + bytes_leidos, (int)tamanio - (int)bytes_leidos, archivo)){
+        size_t leido = strlen(buffer + bytes_leidos);
+        if (leido > 0 && *(buffer + bytes_leidos + leido - 1) == '\n'){
+            return buffer;
+        } else {
+            char* auxiliar = realloc(buffer,  tamanio * 2);
+            if(!auxiliar) {
+                free(buffer);
+                return NULL;
+            }
+            buffer = auxiliar;
+            tamanio *= 2;
+        }
+        bytes_leidos += leido;
+    }
+
+    if(bytes_leidos == 0){
+        free(buffer);
+        return NULL;
+    }
+
+    return buffer;
 }
 
 void fclosen(FILE* archivo){
-
+    if(!archivo)
+        fclose(archivo);
 }
