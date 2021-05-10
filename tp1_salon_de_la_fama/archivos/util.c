@@ -30,9 +30,7 @@ void vtrfree(void* ptr){
 
 char** split(const char* str, char separador){
     char** ptr = NULL;
-    char* palabra = malloc(sizeof(char*));
-    if(!palabra)
-        return NULL;
+    char* palabra;
     int contador;
     size_t tamanio_str;
     size_t i;
@@ -40,7 +38,6 @@ char** split(const char* str, char separador){
     if(str == NULL || str[0] == 0)
         return NULL;
     for(i = 0; i < strlen(str); i++){
-        palabra = NULL;
         tamanio_str = 0;
         while(str[i] != separador){
             tamanio_str++;
@@ -57,7 +54,7 @@ char** split(const char* str, char separador){
         palabra[tamanio_str] = '\0';
         ptr = vtradd(ptr, palabra);
     }
-    if(str[i+1] == 0){
+    if(str[i] == 0){
         palabra = malloc(sizeof(char*)* 2);
         if(!palabra)
             return NULL;
