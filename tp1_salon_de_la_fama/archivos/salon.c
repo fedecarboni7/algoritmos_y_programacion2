@@ -9,49 +9,54 @@ salon_t* salon_leer_archivo(const char* nombre_archivo){
         return NULL;
     entrenador_t* entrenador = malloc(sizeof(entrenador_t));
     if(!entrenador){
-        free(salon);
         return NULL;
     }
-    pokemon_t* pokemon = malloc(sizeof(pokemon_t));
-    if(!pokemon){
-        free(salon);
-        free(entrenador);
+    FILE* archivo = fopen(nombre_archivo, "r");
+    if(!archivo)
         return NULL;
-    }
-    char* linea = fgets_alloc(nombre_archivo);
+    char* linea = fgets_alloc(archivo);
     size_t cantidad_vectores = vtrlen(split(linea, ';'));
 
     while(linea != NULL){
         if(cantidad_vectores == 2){//Compruebo que se trate de una línea de entrenador
             char** vector = split(linea, ';');
-            void* aux = realloc(salon->entrenadores, sizeof(entrenador_t));
-            if(!aux){
-                free(salon);
-                free(entrenador);
-                free(pokemon);
-                return NULL;
-            }
-            salon->entrenadores = aux;
-            entrenador -> victorias = atoi(vector[1]);
+            entrenador = crear_entrenador(vector, entrenador);
         }
-        if(cantidad_vectores == 6){//Compruebo que se trate de una línea de pokemon
-            char** vector = split(linea, ';');
-            void* aux = realloc(entrenador->equipo, sizeof(pokemon_t));
-            if(!aux){
-                free(salon);
-                free(entrenador);
-                free(pokemon);
-                return NULL;
-            }
-            entrenador->equipo = aux;
-            pokemon->defensa = atoi(vector[1]);
-        }
-        linea = fgets_alloc(nombre_archivo);
+        linea = fgets_alloc(archivo);
         cantidad_vectores = vtrlen(split(linea, ';'));
+        while(cantidad_vectores == 6 && linea){//Compruebo que se trate de una línea de pokemon
+            int contador = 0;
+            char** vector = split(linea, ';');
+            pokemon_t* pokemon = crear_pokemon(vector);
+            entrenador->equipo[contador] = pokemon;
+            contador++;
+            linea = fgets_alloc(archivo);
+            cantidad_vectores = vtrlen(split(linea, ';'));
+        }
     }
-
-    fclosen(nombre_archivo);
+    fclosen(archivo);
     return salon;
+}
+
+entrenador_t* crear_entrenador(char** vector, entrenador_t* entrenador){
+    strcpy(entrenador->nombre, vector[0]);
+    entrenador->victorias = atoi(vector[1]);
+    return entrenador;
+}
+
+pokemon_t* crear_pokemon(char** vector){
+    pokemon_t* pokemon = malloc(sizeof(pokemon_t));
+    if(!pokemon){
+        return NULL;
+    }
+    strcpy(pokemon->nombre, vector[0]);
+    pokemon->nivel = atoi(vector[1]);
+    pokemon->defensa = atoi(vector[2]);
+    pokemon->fuerza = atoi(vector[3]);
+    pokemon->inteligencia = atoi(vector[4]);
+    pokemon->velocidad = atoi(vector[5]);
+
+    return pokemon;
 }
 
 int salon_guardar_archivo(salon_t* salon, const char* nombre_archivo){

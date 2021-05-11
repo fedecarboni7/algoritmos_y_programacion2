@@ -30,6 +30,10 @@ typedef struct{
  */
 salon_t* salon_leer_archivo(const char* nombre_archivo);
 
+entrenador_t* crear_entrenador(char** vector, entrenador_t* entrenador);
+
+pokemon_t* crear_pokemon(char** vector);
+
 /**
  * Guarda el salon a un archivo.
  *
