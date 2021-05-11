@@ -16,14 +16,16 @@ void* vtradd(void* ptr, void* item){
     ptr = realloc(ptr, sizeof(void*) * (tamanio_anterior + 2));
     if(!ptr)
         return NULL;
-    ((void**) ptr)[tamanio_anterior] = item;
-    ((void**) ptr)[tamanio_anterior + 1] = NULL;
+    void** puntero = ptr;
+    puntero[tamanio_anterior] = item;
+    puntero[tamanio_anterior + 1] = NULL;
     return ptr;
 }
 
 void vtrfree(void* ptr){
+    void** puntero = ptr;
     for(int i = 0; i <= vtrlen(ptr); i++){
-        free(((void**)ptr)[i]);
+        free(puntero[i]);
     }
     free(ptr);
 }
