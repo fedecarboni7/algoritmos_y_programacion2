@@ -8,29 +8,32 @@ salon_t* salon_leer_archivo(const char* nombre_archivo){
     if(!salon)
         return NULL;
     entrenador_t* entrenador = malloc(sizeof(entrenador_t));
-    if(!entrenador){
+    if(!entrenador)
         return NULL;
-    }
     FILE* archivo = fopen(nombre_archivo, "r");
     if(!archivo)
         return NULL;
     char* linea = fgets_alloc(archivo);
     size_t cantidad_vectores = vtrlen(split(linea, ';'));
+    char** vector = split(linea, ';');
+    int cant_entrenadores = 0;
+    int cant_pokemones = 0;
 
-    while(linea != NULL){
+    while(linea){
         if(cantidad_vectores == 2){//Compruebo que se trate de una línea de entrenador
-            char** vector = split(linea, ';');
             entrenador = crear_entrenador(vector, entrenador);
+            cant_entrenadores++;
         }
         linea = fgets_alloc(archivo);
+        vector = split(linea, ';');
         cantidad_vectores = vtrlen(split(linea, ';'));
+        
         while(cantidad_vectores == 6 && linea){//Compruebo que se trate de una línea de pokemon
-            int contador = 0;
-            char** vector = split(linea, ';');
             pokemon_t* pokemon = crear_pokemon(vector);
-            entrenador->equipo[contador] = pokemon;
-            contador++;
+            entrenador->equipo[cant_pokemones] = pokemon;
+            cant_pokemones++;
             linea = fgets_alloc(archivo);
+            vector = split(linea, ';');
             cantidad_vectores = vtrlen(split(linea, ';'));
         }
     }
@@ -46,9 +49,8 @@ entrenador_t* crear_entrenador(char** vector, entrenador_t* entrenador){
 
 pokemon_t* crear_pokemon(char** vector){
     pokemon_t* pokemon = malloc(sizeof(pokemon_t));
-    if(!pokemon){
+    if(!pokemon)
         return NULL;
-    }
     strcpy(pokemon->nombre, vector[0]);
     pokemon->nivel = atoi(vector[1]);
     pokemon->defensa = atoi(vector[2]);
