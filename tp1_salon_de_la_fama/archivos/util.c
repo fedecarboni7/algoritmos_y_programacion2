@@ -2,10 +2,10 @@
 #include <string.h>
 
 size_t vtrlen(void* ptr){
-    if (ptr == NULL)
+    if(ptr == NULL)
         return 0;
     size_t contador = 0;
-    while (((void**) ptr)[contador] != NULL){
+    while(((void**) ptr)[contador] != NULL){
         contador++;
     }
     return contador;
@@ -32,31 +32,29 @@ void vtrfree(void* ptr){
 
 char** split(const char* str, char separador){
     char** ptr = NULL;
-    char* palabra;
-    int contador;
+    char* palabra = NULL;
+    size_t posicion = 0;
     size_t tamanio_str;
-    size_t i;
-    size_t j;
     if(str == NULL || str[0] == 0)
         return NULL;
-    for(i = 0; i < strlen(str); i++){
+    for(posicion = 0; posicion < strlen(str); posicion++){
         tamanio_str = 0;
-        while(str[i] != separador){
+        while(str[posicion] != separador && str[posicion] != '\0'){
             tamanio_str++;
-            i++;
+            posicion++;
         }
         palabra = malloc(sizeof(char*)* tamanio_str + 1);
         if(!palabra)
             return NULL;
-        contador = 0;
-        for(j = i - tamanio_str; j <= i; j++){
+        int contador = 0;
+        for(size_t j = posicion - tamanio_str; j <= posicion; j++){
             palabra[contador] = str[j];
             contador++;
         }
         palabra[tamanio_str] = '\0';
         ptr = vtradd(ptr, palabra);
     }
-    if(str[i] == 0){
+    if(str[posicion] == 0){
         palabra = malloc(sizeof(char*)* 2);
         if(!palabra)
             return NULL;
