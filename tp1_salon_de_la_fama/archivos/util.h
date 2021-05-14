@@ -30,6 +30,10 @@ void vtrfree(void* ptr);
  */
 char** split(const char* str, char separador);
 
+size_t devuelvo_posicion_separador(const char* str, char separador, size_t posicion_inicio);
+
+char* duplicar_string(const char* str, size_t posicion_separador, size_t posicion_inicio);
+
 /**
  * Lee una linea completa de un archivo y devuelve un puntero al string leido.
  *

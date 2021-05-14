@@ -31,38 +31,38 @@ void vtrfree(void* ptr){
 }
 
 char** split(const char* str, char separador){
-    char** ptr = NULL;
-    char* palabra = NULL;
-    size_t posicion = 0;
-    size_t tamanio_str;
-    if(str == NULL || str[0] == 0)
+    if(!str || strlen(str) == 0)
         return NULL;
-    for(posicion = 0; posicion < strlen(str); posicion++){
-        tamanio_str = 0;
-        while(str[posicion] != separador && str[posicion] != '\0'){
-            tamanio_str++;
-            posicion++;
-        }
-        palabra = malloc(sizeof(char*)* tamanio_str + 1);
-        if(!palabra)
-            return NULL;
-        int contador = 0;
-        for(size_t j = posicion - tamanio_str; j <= posicion; j++){
-            palabra[contador] = str[j];
-            contador++;
-        }
-        palabra[tamanio_str] = '\0';
-        ptr = vtradd(ptr, palabra);
+    char** vector = NULL;
+    size_t posicion_inicio = 0;
+    while(posicion_inicio != '\0'){
+        size_t posicion_separador = devuelvo_posicion_separador(str, separador, posicion_inicio);
+        char* palabra = duplicar_string(str, posicion_separador, posicion_inicio);
+        vector = vtradd(vector, palabra);
+        posicion_inicio = posicion_separador;
     }
-    if(str[posicion] == 0){
-        palabra = malloc(sizeof(char*)* 2);
-        if(!palabra)
-            return NULL;
-        palabra[0] = 0;
-        palabra[1] = '\0';
-        ptr = vtradd(ptr, palabra);
+    return vector;
+}
+
+size_t devuelvo_posicion_separador(const char* str, char separador, size_t posicion){
+    while(str[posicion] != separador && str[posicion] != '\0'){
+        posicion++;
     }
-    return ptr;
+    return posicion;
+}
+
+char* duplicar_string(const char* str, size_t posicion_separador, size_t posicion_inicio){
+    size_t tamanio = posicion_separador - posicion_inicio;
+    char* palabra = NULL;
+    palabra = malloc(sizeof(char*)* tamanio+1);
+    if(!palabra)
+        return NULL;
+    int contador = 0;
+    for(size_t posicion_actual = posicion_inicio; posicion_actual <= posicion_separador; posicion_actual++){
+        palabra[contador] = str[posicion_actual];
+        contador++;
+    }
+    return palabra;
 }
 
 char* fgets_alloc(FILE* archivo){
