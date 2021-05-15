@@ -35,33 +35,44 @@ char** split(const char* str, char separador){
         return NULL;
     char** vector = NULL;
     size_t posicion_inicio = 0;
-    while(posicion_inicio != '\0'){
+    while(str[posicion_inicio] != '\0'){//"Hola;123;;fin"
         size_t posicion_separador = devuelvo_posicion_separador(str, separador, posicion_inicio);
         char* palabra = duplicar_string(str, posicion_separador, posicion_inicio);
         vector = vtradd(vector, palabra);
         posicion_inicio = posicion_separador;
+        if(str[posicion_inicio] != '\0')
+            posicion_inicio++;
     }
     return vector;
 }
 
 size_t devuelvo_posicion_separador(const char* str, char separador, size_t posicion){
-    while(str[posicion] != separador && str[posicion] != '\0'){
+    while(str[posicion] != separador && str[posicion] != '\0')
         posicion++;
-    }
     return posicion;
 }
 
 char* duplicar_string(const char* str, size_t posicion_separador, size_t posicion_inicio){
     size_t tamanio = posicion_separador - posicion_inicio;
+    if(tamanio == 0){
+        tamanio = 1;
+        char* palabra = NULL;
+        palabra = malloc(sizeof(char*)* tamanio+1);
+        if(!palabra)
+            return NULL;
+        palabra[0] = 0;
+        palabra[1] = '\0';
+        return palabra;
+    }
     char* palabra = NULL;
     palabra = malloc(sizeof(char*)* tamanio+1);
     if(!palabra)
         return NULL;
     int contador = 0;
-    for(size_t posicion_actual = posicion_inicio; posicion_actual <= posicion_separador; posicion_actual++){
+    size_t posicion_actual;//"Hola;123;;fin"
+    for(posicion_actual = posicion_inicio; posicion_actual < posicion_separador; posicion_actual++, contador++)
         palabra[contador] = str[posicion_actual];
-        contador++;
-    }
+    palabra[contador+1] = '\0';
     return palabra;
 }
 
