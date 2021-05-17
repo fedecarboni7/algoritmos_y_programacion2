@@ -35,6 +35,8 @@ salon_t* salon_leer_archivo(const char* nombre_archivo){
         vector = split(linea, ';');
         cantidad_vectores = vtrlen(split(linea, ';'));
     }
+    free(linea);
+    vtrfree(vector);
     fclosen(archivo);
     return salon;
 }
@@ -106,10 +108,6 @@ salon_t* salon_agregar_entrenador(salon_t* salon, entrenador_t* entrenador){
     if(!salon || !entrenador)
         return NULL;
     entrenador_t** vector_entrenadores = vtradd(salon->entrenadores,entrenador);
-    if(!vector_entrenadores){
-        vtrfree(vector_entrenadores);
-        return NULL;
-    }
     vector_entrenadores = ordenar_entrenadores_por_victorias(vector_entrenadores);
     salon->entrenadores = vector_entrenadores;
     return salon;
