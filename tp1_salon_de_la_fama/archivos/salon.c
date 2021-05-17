@@ -3,44 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-salon_t* salon_leer_archivo(const char* nombre_archivo){
-    salon_t* salon = calloc(1, sizeof(salon_t));
-    if(!salon){
-        return NULL;
-        }
-    FILE* archivo = fopen(nombre_archivo, "r");
-    if(!archivo){
-        free(salon);
-        return NULL;
-        }
-    char* linea = fgets_alloc(archivo);
-    char** vector = split(linea, ';');
-    size_t cantidad_vectores = vtrlen(split(linea, ';'));
-    entrenador_t* entrenador_actual = NULL;
-
-    while(linea){
-        if(cantidad_vectores == 2){//Compruebo que se trate de una línea de entrenador
-            entrenador_actual = crear_y_agregar_entrenador(vector, salon);
-            if(!entrenador_actual)
-                return NULL;
-        }
-        else if(cantidad_vectores == 6){//Compruebo que se trate de una línea de pokemon
-            pokemon_t* pokemon = crear_y_agregar_pokemon(vector, entrenador_actual);   
-            if(!pokemon)
-                return NULL;
-        }
-        free(linea);
-        vtrfree(vector);
-        linea = fgets_alloc(archivo);
-        vector = split(linea, ';');
-        cantidad_vectores = vtrlen(split(linea, ';'));
-    }
-    free(linea);
-    vtrfree(vector);
-    fclosen(archivo);
-    return salon;
-}
-
 entrenador_t* crear_y_agregar_entrenador(char** vector, salon_t* salon){
     entrenador_t* entrenador = calloc(1, sizeof(entrenador_t));
     if(!entrenador)
@@ -74,6 +36,60 @@ pokemon_t* crear_y_agregar_pokemon(char** vector, entrenador_t* entrenador_actua
         return NULL;
 
     return pokemon;
+}
+
+entrenador_t** ordenar_entrenadores_por_victorias(entrenador_t** vtr_entrenadores){
+    entrenador_t* entrenador_aux;
+    size_t cantidad_entrenadores = vtrlen(vtr_entrenadores);
+
+    for(int entrenador_a = 0; entrenador_a < cantidad_entrenadores; entrenador_a++){
+        for(int entrenador_b = 0; entrenador_b < cantidad_entrenadores; entrenador_b++){
+            if(vtr_entrenadores[entrenador_b]->victorias > vtr_entrenadores[entrenador_a]->victorias){
+                entrenador_aux = vtr_entrenadores[entrenador_a];
+                vtr_entrenadores[entrenador_a] = vtr_entrenadores[entrenador_b];
+                vtr_entrenadores[entrenador_b] = entrenador_aux;     
+            }    
+        }
+    }
+    return vtr_entrenadores;
+}
+
+salon_t* salon_leer_archivo(const char* nombre_archivo){
+    salon_t* salon = calloc(1, sizeof(salon_t));
+    if(!salon){
+        return NULL;
+        }
+    FILE* archivo = fopen(nombre_archivo, "r");
+    if(!archivo){
+        free(salon);
+        return NULL;
+        }
+    char* linea = fgets_alloc(archivo);
+    char** vector = split(linea, ';');
+    size_t cantidad_vectores = vtrlen(vector);
+    entrenador_t* entrenador_actual = NULL;
+
+    while(linea){
+        if(cantidad_vectores == 2){//Compruebo que se trate de una línea de entrenador
+            entrenador_actual = crear_y_agregar_entrenador(vector, salon);
+            if(!entrenador_actual)
+                return NULL;
+        }
+        else if(cantidad_vectores == 6){//Compruebo que se trate de una línea de pokemon
+            pokemon_t* pokemon = crear_y_agregar_pokemon(vector, entrenador_actual);   
+            if(!pokemon)
+                return NULL;
+        }
+        free(linea);
+        vtrfree(vector);
+        linea = fgets_alloc(archivo);
+        vector = split(linea, ';');
+        cantidad_vectores = vtrlen(vector);
+    }
+    free(linea);
+    vtrfree(vector);
+    fclosen(archivo);
+    return salon;
 }
 
 int salon_guardar_archivo(salon_t* salon, const char* nombre_archivo){
@@ -111,22 +127,6 @@ salon_t* salon_agregar_entrenador(salon_t* salon, entrenador_t* entrenador){
     vector_entrenadores = ordenar_entrenadores_por_victorias(vector_entrenadores);
     salon->entrenadores = vector_entrenadores;
     return salon;
-}
-
-entrenador_t** ordenar_entrenadores_por_victorias(entrenador_t** vtr_entrenadores){
-    entrenador_t* entrenador_aux;
-    size_t cantidad_entrenadores = vtrlen(vtr_entrenadores);
-
-    for(int entrenador_a = 0; entrenador_a < cantidad_entrenadores; entrenador_a++){
-        for(int entrenador_b = 0; entrenador_b < cantidad_entrenadores; entrenador_b++){
-            if(vtr_entrenadores[entrenador_b]->victorias > vtr_entrenadores[entrenador_a]->victorias){
-                entrenador_aux = vtr_entrenadores[entrenador_a];
-                vtr_entrenadores[entrenador_a] = vtr_entrenadores[entrenador_b];
-                vtr_entrenadores[entrenador_b] = entrenador_aux;     
-            }    
-        }
-    }
-    return vtr_entrenadores;
 }
 
 entrenador_t** salon_obtener_entrenadores_mas_ganadores(salon_t* salon, int cantidad_minima_victorias){

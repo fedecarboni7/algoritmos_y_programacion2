@@ -1,6 +1,26 @@
 #include "util.h"
 #include <string.h>
 
+size_t devuelvo_posicion_separador(const char* str, char separador, size_t posicion){
+    while(str[posicion] != separador && str[posicion] != '\0')
+        posicion++;
+    return posicion;
+}
+
+char* duplicar_string(const char* str, size_t posicion_separador, size_t posicion_inicio){
+    size_t tamanio = posicion_separador - posicion_inicio;
+    char*palabra = malloc(sizeof(char*)* tamanio+1);
+    if(!palabra){
+        free(palabra);
+        return NULL;
+        }
+    for(size_t contador = 0; contador < tamanio; contador++)
+        palabra[contador] = str[posicion_inicio + contador];
+    
+    palabra[tamanio] = 0;
+    return palabra;
+}
+
 size_t vtrlen(void* ptr){
     if(ptr == NULL){
         free(ptr);
@@ -55,26 +75,6 @@ char** split(const char* str, char separador){
         posicion_inicio = posicion_separador+1;
     }
     return vector;
-}
-
-size_t devuelvo_posicion_separador(const char* str, char separador, size_t posicion){
-    while(str[posicion] != separador && str[posicion] != '\0')
-        posicion++;
-    return posicion;
-}
-
-char* duplicar_string(const char* str, size_t posicion_separador, size_t posicion_inicio){
-    size_t tamanio = posicion_separador - posicion_inicio;
-    char*palabra = malloc(sizeof(char*)* tamanio+1);
-    if(!palabra){
-        free(palabra);
-        return NULL;
-        }
-    for(size_t contador = 0; contador < tamanio; contador++)
-        palabra[contador] = str[posicion_inicio + contador];
-    
-    palabra[tamanio] = 0;
-    return palabra;
 }
 
 char* fgets_alloc(FILE* archivo){

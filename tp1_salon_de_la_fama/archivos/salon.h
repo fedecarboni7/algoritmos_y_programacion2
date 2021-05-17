@@ -30,10 +30,6 @@ typedef struct{
  */
 salon_t* salon_leer_archivo(const char* nombre_archivo);
 
-entrenador_t* crear_y_agregar_entrenador(char** vector, salon_t* salon);
-
-pokemon_t* crear_y_agregar_pokemon(char** vector, entrenador_t* entrenador_actual);
-
 /**
  * Guarda el salon a un archivo.
  *
@@ -52,8 +48,6 @@ int salon_guardar_archivo(salon_t* salon, const char* nombre_archivo);
  * Devuelve el salon o NULL en caso de error.
  */
 salon_t* salon_agregar_entrenador(salon_t* salon, entrenador_t* entrenador);
-
-entrenador_t** ordenar_entrenadores_por_victorias(entrenador_t** vtr_entrenadores);
 
 /**
  * Busca en el salon entrenadores que hayan ganado por lo menos cantidad_minima_victorias batallas.
