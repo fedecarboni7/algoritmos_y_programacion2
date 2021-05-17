@@ -4,7 +4,7 @@
 
 int main(){
     printf("Crear un salon usando el archivo 'salon_original.sal'\n");
-
+    
 
 
     printf("\nObtener los entrenadores con al menos 3 ligas ganadas y mostrarlos por pantalla.\n");

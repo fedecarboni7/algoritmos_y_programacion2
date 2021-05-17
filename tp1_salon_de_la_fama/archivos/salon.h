@@ -53,6 +53,8 @@ int salon_guardar_archivo(salon_t* salon, const char* nombre_archivo);
  */
 salon_t* salon_agregar_entrenador(salon_t* salon, entrenador_t* entrenador);
 
+entrenador_t** ordenar_entrenadores_por_victorias(entrenador_t** vtr_entrenadores);
+
 /**
  * Busca en el salon entrenadores que hayan ganado por lo menos cantidad_minima_victorias batallas.
  *
