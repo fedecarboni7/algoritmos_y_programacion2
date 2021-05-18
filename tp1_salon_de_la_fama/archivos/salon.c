@@ -147,19 +147,19 @@ entrenador_t** salon_obtener_entrenadores_mas_ganadores(salon_t* salon, int cant
 
 void salon_mostrar_entrenador(entrenador_t* entrenador){
     size_t cantidad_pokemones = vtrlen(entrenador->equipo);
-    printf("El entrenador %s tiene %i victorias y los siguientes pokemones:\n",entrenador->nombre,entrenador->victorias);
+    printf("\nEl entrenador %s tiene %i victorias y los siguientes pokemones:\n",entrenador->nombre,entrenador->victorias);
     if(cantidad_pokemones == 0)
         printf("0 pokemones\n");
     else{
-        for(int pokemon = 1; pokemon <= cantidad_pokemones; pokemon++){
+        for(int pokemon = 0; pokemon < cantidad_pokemones; pokemon++){
             char* nombre_pokemon = entrenador->equipo[pokemon]->nombre;
             int nivel_pokemon = entrenador->equipo[pokemon]->nivel;
             int defensa_pokemon = entrenador->equipo[pokemon]->defensa;
             int fuerza_pokemon = entrenador->equipo[pokemon]->fuerza;
             int inteligencia_pokemon = entrenador->equipo[pokemon]->inteligencia;
             int velocidad_pokemon = entrenador->equipo[pokemon]->velocidad;
-            printf("%i. %s\n", pokemon, nombre_pokemon);
-            printf("Nivel: %i | Defensa: %i | Fuerza: %i | Inteligencia: %i | Velocidad: %i", nivel_pokemon, defensa_pokemon, fuerza_pokemon, inteligencia_pokemon, velocidad_pokemon);
+            printf("%i. %s\n", pokemon+1, nombre_pokemon);
+            printf("Nivel: %i | Defensa: %i | Fuerza: %i | Inteligencia: %i | Velocidad: %i\n", nivel_pokemon, defensa_pokemon, fuerza_pokemon, inteligencia_pokemon, velocidad_pokemon);
         }
     }
 }
