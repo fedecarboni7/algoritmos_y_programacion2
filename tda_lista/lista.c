@@ -1,10 +1,18 @@
 #include "lista.h"
+#include <stdlib.h>
 
 lista_t* lista_crear(){
-    return NULL;
+    lista_t* lista_nueva = realloc(0, sizeof(lista_t));
+    if(!lista_nueva)
+        return NULL;
+    lista_nueva->nodo_inicio = NULL;
+    lista_nueva->nodo_fin = NULL;
+    lista_nueva->cantidad = 0;
+    return lista_nueva;
 }
 
 int lista_insertar(lista_t* lista, void* elemento){
+
     return 0;
 }
 
