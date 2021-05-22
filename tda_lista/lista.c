@@ -2,17 +2,18 @@
 #include <stdlib.h>
 
 lista_t* lista_crear(){
-    lista_t* lista_nueva = realloc(0, sizeof(lista_t));
+    lista_t* lista_nueva = calloc(1, sizeof(lista_t));
     if(!lista_nueva)
         return NULL;
-    lista_nueva->nodo_inicio = NULL;
-    lista_nueva->nodo_fin = NULL;
-    lista_nueva->cantidad = 0;
     return lista_nueva;
 }
 
 int lista_insertar(lista_t* lista, void* elemento){
-
+    if(!lista)
+        return -1;
+    lista->nodo_inicio = calloc(1, sizeof(nodo_t));
+    lista->nodo_inicio->elemento = elemento;
+    lista->cantidad++;
     return 0;
 }
 
@@ -69,6 +70,8 @@ void* lista_primero(lista_t* lista){
 }
 
 void lista_destruir(lista_t* lista){
+    free(lista->nodo_inicio);
+    free(lista);
 }
 
 lista_iterador_t* lista_iterador_crear(lista_t* lista){
