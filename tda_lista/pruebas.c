@@ -6,7 +6,7 @@ void dadoQueNecesitoUnaLista_siCreoUnaListaNueva_devuelvoUnaListaVacia(){
 
   pa2m_afirmar(nueva_lista->nodo_inicio == NULL, "Se obtuvo una lista con un nodo inicio igual a NULL");
   pa2m_afirmar(nueva_lista->nodo_fin == NULL, "Se obtuvo una lista con un nodo fin igual a NULL");
-  pa2m_afirmar(nueva_lista->cantidad == 0, "Se obtuvo una lista con cantidad igual a 0");
+  pa2m_afirmar(lista_elementos(nueva_lista) == 0, "Se obtuvo una lista con cantidad igual a 0");
 
   lista_destruir(nueva_lista);
 }
@@ -16,7 +16,7 @@ void dadaUnaListaVacia_siLeAgregoUnElemento_resultaEnUnaListaConUnElemento(){
   void* elemento = malloc(sizeof(int));
 
   pa2m_afirmar(lista_insertar(nueva_lista, elemento) == 0, "Se pudo agregar un elemento a la lista");
-  pa2m_afirmar(nueva_lista->cantidad == 1, "Se obtuvo una lista con un elemento");
+  pa2m_afirmar(lista_elementos(nueva_lista) == 1, "Se obtuvo una lista con un elemento");
 
   lista_destruir(nueva_lista);
 }
@@ -28,7 +28,7 @@ void dadaUnaLista_siAgregoElementos_laListaSeAgranda(){
   void* elemento_nuevo = malloc(sizeof(int));
 
   pa2m_afirmar(lista_insertar(lista, elemento_nuevo) == 0, "Se pudo agregar un elemento nuevo a la lista");
-  pa2m_afirmar(lista->cantidad == 2, "Se obtuvo una lista con dos elementos");
+  pa2m_afirmar(lista_elementos(lista) == 2, "Se obtuvo una lista con dos elementos");
 
   lista_destruir(lista);
 }

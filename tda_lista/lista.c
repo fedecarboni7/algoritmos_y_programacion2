@@ -11,8 +11,23 @@ lista_t* lista_crear(){
 int lista_insertar(lista_t* lista, void* elemento){
     if(!lista)
         return -1;
-    lista->nodo_inicio = calloc(1, sizeof(nodo_t));
-    lista->nodo_inicio->elemento = elemento;
+    if(!lista->nodo_inicio){
+        nodo_t* nuevo_nodo = calloc(1, sizeof(nodo_t));
+        if(!nuevo_nodo)
+            return -1;
+        nuevo_nodo->elemento = elemento;
+        lista->nodo_inicio = nuevo_nodo;
+        lista->nodo_fin = nuevo_nodo;
+        lista->nodo_inicio->siguiente = lista->nodo_fin;
+    }
+    else{
+        nodo_t* nuevo_nodo = calloc(1, sizeof(nodo_t));
+        if(!nuevo_nodo)
+            return -1;
+        nuevo_nodo->elemento = elemento;
+        lista->nodo_fin->siguiente = nuevo_nodo;
+        lista->nodo_fin = nuevo_nodo;
+    }
     lista->cantidad++;
     return 0;
 }
@@ -42,7 +57,9 @@ bool lista_vacia(lista_t* lista){
 }
 
 size_t lista_elementos(lista_t* lista){
-    return 0;
+    if(!lista)
+        return 0;
+    return lista->cantidad;
 }
 
 int lista_apilar(lista_t* lista, void* elemento){
@@ -70,7 +87,7 @@ void* lista_primero(lista_t* lista){
 }
 
 void lista_destruir(lista_t* lista){
-    free(lista->nodo_inicio);
+    //Hay que terminar de implementarla
     free(lista);
 }
 
