@@ -14,8 +14,10 @@ int main(){
 
     printf("\nObtener los entrenadores con al menos 3 ligas ganadas y mostrarlos por pantalla.\n");
     entrenador_t** entrenador_con_tres_o_mas_victorias = salon_obtener_entrenadores_mas_ganadores(salon, 3);
-    if(!entrenador_con_tres_o_mas_victorias)
+    if(!entrenador_con_tres_o_mas_victorias){
+        salon_destruir(salon);
         return -1;
+        }
     size_t cantidad_entrenadores_con_tres_o_mas_victorias = vtrlen(entrenador_con_tres_o_mas_victorias);
     
     for(int i = 0; i < cantidad_entrenadores_con_tres_o_mas_victorias; i++){
@@ -25,12 +27,15 @@ int main(){
 
     printf("\nAgregar 2 entrenadores al salon con 5 y 7 victorias respectivamente.\n");
     entrenador_t* entrenador_1 = malloc(sizeof(entrenador_t));
-    if(!entrenador_1)
+    if(!entrenador_1){
+        salon_destruir(salon);
         return -1;
+        }
     entrenador_t* entrenador_2 = malloc(sizeof(entrenador_t));
-    if(!entrenador_2)
+    if(!entrenador_2){
+        salon_destruir(salon);
         return -1;
-        
+        }
     strcpy(entrenador_1->nombre, "Nacho");
     entrenador_1->victorias = 5;
     entrenador_1->equipo = NULL;
@@ -42,8 +47,10 @@ int main(){
 
     printf("\nObtener los entrenadores con al menos 5 ligas ganadas y mostrarlos por pantalla.\n");
     entrenador_t** entrenador_con_cinco_o_mas_victorias = salon_obtener_entrenadores_mas_ganadores(salon, 5);
-    if(!entrenador_con_cinco_o_mas_victorias)
+    if(!entrenador_con_cinco_o_mas_victorias){
+        salon_destruir(salon);
         return -1;
+        }
     size_t cantidad_entrenadores_con_cinco_o_mas_victorias = vtrlen(entrenador_con_cinco_o_mas_victorias);
     
     for(int i = 0; i < cantidad_entrenadores_con_cinco_o_mas_victorias; i++){

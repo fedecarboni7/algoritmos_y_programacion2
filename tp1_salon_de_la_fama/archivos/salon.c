@@ -21,7 +21,6 @@ entrenador_t* crear_y_agregar_entrenador(char** vector, salon_t* salon){
 pokemon_t* crear_y_agregar_pokemon(char** vector, entrenador_t* entrenador_actual){
     pokemon_t* pokemon = calloc(1, sizeof(pokemon_t));
     if(!pokemon){
-        free(entrenador_actual);
         return NULL;
         }
     strcpy(pokemon->nombre, vector[0]);
@@ -72,13 +71,17 @@ salon_t* salon_leer_archivo(const char* nombre_archivo){
     while(linea){
         if(cantidad_vectores == 2){//Compruebo que se trate de una línea de entrenador
             entrenador_actual = crear_y_agregar_entrenador(vector, salon);
-            if(!entrenador_actual)
+            if(!entrenador_actual){
+                free(salon);
                 return NULL;
+            }
         }
         else if(cantidad_vectores == 6){//Compruebo que se trate de una línea de pokemon
             pokemon_t* pokemon = crear_y_agregar_pokemon(vector, entrenador_actual);   
-            if(!pokemon)
+            if(!pokemon){
+                free(salon);
                 return NULL;
+            }
         }
         free(linea);
         vtrfree(vector);
