@@ -18,6 +18,7 @@ void dadaUnaListaVacia_siLeAgregoUnElemento_resultaEnUnaListaConUnElemento(){
   pa2m_afirmar(lista_insertar(nueva_lista, elemento) == 0, "Se pudo agregar un elemento a la lista");
   pa2m_afirmar(lista_elementos(nueva_lista) == 1, "Se obtuvo una lista con un elemento");
 
+  free(elemento);
   lista_destruir(nueva_lista);
 }
 
@@ -30,6 +31,8 @@ void dadaUnaLista_siAgregoElementos_laListaSeAgranda(){
   pa2m_afirmar(lista_insertar(lista, elemento_nuevo) == 0, "Se pudo agregar un elemento nuevo a la lista");
   pa2m_afirmar(lista_elementos(lista) == 2, "Se obtuvo una lista con dos elementos");
 
+  free(elemento);
+  free(elemento_nuevo);
   lista_destruir(lista);
 }
 

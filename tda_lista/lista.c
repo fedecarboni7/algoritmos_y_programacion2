@@ -37,6 +37,19 @@ int lista_insertar_en_posicion(lista_t* lista, void* elemento, size_t posicion){
 }
 
 int lista_borrar(lista_t* lista){
+    if(!lista)
+        return -1;
+    
+    return 0;
+}
+
+int lista_borrar_primero(lista_t* lista){
+    if(!lista)
+        return -1;
+    nodo_t* nodo_aux = lista->nodo_inicio;
+    lista->nodo_inicio = lista->nodo_inicio->siguiente;
+    lista->cantidad--;
+    free(nodo_aux);
     return 0;
 }
 
@@ -87,7 +100,8 @@ void* lista_primero(lista_t* lista){
 }
 
 void lista_destruir(lista_t* lista){
-    //Hay que terminar de implementarla
+    while(lista_elementos(lista) > 0)
+        lista_borrar_primero(lista);
     free(lista);
 }
 
