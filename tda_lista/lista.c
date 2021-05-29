@@ -57,6 +57,9 @@ int lista_insertar_primero(lista_t* lista, void* elemento){
 }
 
 int lista_insertar_en_posicion(lista_t* lista, void* elemento, size_t posicion){
+    if(!lista)
+        return -1;
+    
     return 0;
 }
 

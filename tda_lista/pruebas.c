@@ -73,6 +73,17 @@ void dadaUnaLista_siLeAgregoElementos_puedoSaberConCuantosElementosCuenta(){
   lista_destruir(lista);
 }
 
+void dadaUnaLista_siLePasoUnElementoYunaPosicion_elElementoSeAgregaEnEsaPosicionDeLaLista(){
+  lista_t* lista = lista_crear();
+  void* elemento = malloc(sizeof(char));
+
+  pa2m_afirmar(lista_insertar_en_posicion(lista, elemento, 2) == 0, "Se pudo agregar algo como tercer elemento de la lista");
+  pa2m_afirmar(lista_elemento_en_posicion(lista, 2) == elemento, "El elemento agregado es el que se encuentra en la tercer posicion de la lista");
+
+  free(elemento);
+  lista_destruir(lista);
+}
+
 int main(){
   pa2m_nuevo_grupo("Pruebas de crear lista");
   dadoQueNecesitoUnaLista_siCreoUnaListaNueva_devuelvoUnaListaVacia();
@@ -86,6 +97,9 @@ int main(){
 
   pa2m_nuevo_grupo("Pruebas de lista elemento en posición");
   dadaUnaLista_siPidoElElementoDeUnaPosicion_reciboEseElemento();
+
+  pa2m_nuevo_grupo("Pruebas de lista insertar en posición");
+  dadaUnaLista_siLePasoUnElementoYunaPosicion_elElementoSeAgregaEnEsaPosicionDeLaLista();
 
   return pa2m_mostrar_reporte();
 }
