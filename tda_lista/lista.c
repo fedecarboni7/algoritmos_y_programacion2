@@ -59,7 +59,28 @@ int lista_insertar_primero(lista_t* lista, void* elemento){
 int lista_insertar_en_posicion(lista_t* lista, void* elemento, size_t posicion){
     if(!lista)
         return -1;
-    
+    if(posicion >= lista->cantidad)
+        return lista_insertar(lista, elemento);
+    nodo_t* nuevo_nodo = calloc(1, sizeof(nodo_t));
+    if(!nuevo_nodo)
+        return -1;
+    nuevo_nodo->elemento = elemento;
+    if(posicion == 0){
+        nuevo_nodo->siguiente = lista->nodo_inicio->siguiente;
+        lista->nodo_inicio = nuevo_nodo;
+    }
+    else{
+        size_t posicion_aux = 0;
+        nodo_t* nodo_aux = lista->nodo_inicio;
+        while(posicion_aux < posicion){
+            nodo_aux = nodo_aux->siguiente;
+            posicion_aux++;
+        }
+        nuevo_nodo->siguiente = nodo_aux->siguiente;
+        nodo_aux = nuevo_nodo;
+    }
+    lista->cantidad++;
+    free(nuevo_nodo);
     return 0;
 }
 

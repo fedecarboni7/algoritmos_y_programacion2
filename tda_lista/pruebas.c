@@ -75,12 +75,38 @@ void dadaUnaLista_siLeAgregoElementos_puedoSaberConCuantosElementosCuenta(){
 
 void dadaUnaLista_siLePasoUnElementoYunaPosicion_elElementoSeAgregaEnEsaPosicionDeLaLista(){
   lista_t* lista = lista_crear();
+  void* primer_elemento = malloc(sizeof(int));
   void* elemento = malloc(sizeof(char));
+  void* ultimo_elemento = malloc(sizeof(float));
+  void* otro_elemento = malloc(sizeof(double));
 
-  pa2m_afirmar(lista_insertar_en_posicion(lista, elemento, 2) == 0, "Se pudo agregar algo como tercer elemento de la lista");
-  pa2m_afirmar(lista_elemento_en_posicion(lista, 2) == elemento, "El elemento agregado es el que se encuentra en la tercer posicion de la lista");
+  pa2m_afirmar(lista_insertar_en_posicion(lista, primer_elemento, 20) == 0, "Si paso una lista vacía, el elemento se agrega en la primer posición");
+  pa2m_afirmar(lista_elemento_en_posicion(lista, 0) == primer_elemento, "El elemento agregado es el que se encuentra en la primer posicion de la lista");
+  pa2m_afirmar(lista->nodo_inicio->elemento == primer_elemento, "El elemento agregado queda al principio de la lista");
+  
+  pa2m_afirmar(lista_insertar_en_posicion(lista, elemento, 20) == 0, "Si paso una posicion inválida, el elemento se agrega en la última posición");
+  pa2m_afirmar(lista_elemento_en_posicion(lista, 1) == elemento, "El elemento agregado es el que se encuentra en la segunda posicion de la lista");
+  pa2m_afirmar(lista->nodo_fin->elemento == elemento, "El elemento agregado queda en final de la lista");
 
+  pa2m_afirmar(lista_insertar_en_posicion(lista, ultimo_elemento, 2) == 0, "Se pudo agregar algo como tercer elemento de la lista");
+  pa2m_afirmar(lista_elemento_en_posicion(lista, 2) == ultimo_elemento, "El elemento agregado es el que se encuentra en la tercer posicion de la lista");
+  pa2m_afirmar(lista->nodo_fin->elemento == ultimo_elemento, "El elemento agregado queda en final de la lista");
+  pa2m_afirmar(lista_elementos(lista) == 3, "La cantidad de elementos en la lista es igual a la cantidad de elementos agregados");
+
+  pa2m_afirmar(lista_insertar_en_posicion(lista, elemento, 20) == 0, "Si paso una posicion inválida, el elemento se agrega en la última posición");
+  pa2m_afirmar(lista_elemento_en_posicion(lista, 3) == elemento, "El elemento agregado es el que se encuentra en la segunda posicion de la lista");
+  pa2m_afirmar(lista->nodo_fin->elemento == elemento, "El elemento agregado queda en final de la lista");
+  pa2m_afirmar(lista_elementos(lista) == 4, "La cantidad de elementos en la lista es igual a la cantidad de elementos agregados");
+
+  pa2m_afirmar(lista_insertar_en_posicion(lista, otro_elemento, 0) == 0, "Si paso la primer posicion, el elemento se agrega al inicio de la lista");
+  pa2m_afirmar(lista_elemento_en_posicion(lista, 0) == otro_elemento, "El elemento agregado es el que se encuentra en la primer posicion de la lista");
+  pa2m_afirmar(lista->nodo_inicio->elemento == otro_elemento, "El elemento agregado queda al principio de la lista");
+  pa2m_afirmar(lista_elementos(lista) == 5, "La cantidad de elementos en la lista es igual a la cantidad de elementos agregados");
+  
   free(elemento);
+  free(primer_elemento);
+  free(ultimo_elemento);
+  free(otro_elemento);
   lista_destruir(lista);
 }
 
