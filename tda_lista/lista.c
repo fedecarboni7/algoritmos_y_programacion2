@@ -66,7 +66,7 @@ int lista_insertar_en_posicion(lista_t* lista, void* elemento, size_t posicion){
         return -1;
     nuevo_nodo->elemento = elemento;
     if(posicion == 0){
-        nuevo_nodo->siguiente = lista->nodo_inicio->siguiente;
+        nuevo_nodo->siguiente = lista->nodo_inicio;
         lista->nodo_inicio = nuevo_nodo;
     }
     else{
@@ -80,31 +80,67 @@ int lista_insertar_en_posicion(lista_t* lista, void* elemento, size_t posicion){
         nodo_aux = nuevo_nodo;
     }
     lista->cantidad++;
-    free(nuevo_nodo);
     return 0;
 }
 
 int lista_borrar(lista_t* lista){
     if(!lista)
         return -1;
+    if(lista->cantidad == 0)
+        return -1;
     nodo_t* nodo_aux = lista->nodo_inicio;
-    lista->nodo_inicio = lista->nodo_inicio->siguiente;
+    if(lista->cantidad == 1){
+        free(nodo_aux);
+        lista->cantidad--;
+        return 0;
+        }
+    size_t posicion = 1;
+    while(posicion < lista->cantidad - 1){
+        nodo_aux = nodo_aux->siguiente;
+        posicion++;
+    }
+    free(lista->nodo_fin);
+    nodo_aux->siguiente = NULL;
+    lista->nodo_fin = nodo_aux;
     lista->cantidad--;
-    free(nodo_aux);
     return 0;
 }
 
 int lista_borrar_primero(lista_t* lista){
     if(!lista)
         return -1;
+    if(lista->cantidad == 0)
+        return -1;
     nodo_t* nodo_aux = lista->nodo_inicio;
+    if(lista->cantidad == 1){
+        free(nodo_aux);
+        lista->cantidad--;
+        return 0;
+        }
     lista->nodo_inicio = lista->nodo_inicio->siguiente;
-    lista->cantidad--;
     free(nodo_aux);
+    lista->cantidad--;
     return 0;
 }
 
 int lista_borrar_de_posicion(lista_t* lista, size_t posicion){
+    if(!lista)
+        return -1;
+    if(posicion >= lista->cantidad - 1)
+        return lista_borrar(lista);
+    if(posicion == 0)
+        return lista_borrar_primero(lista);
+    nodo_t* nodo_aux = lista->nodo_inicio->siguiente;
+    nodo_t* nodo_anterior = lista->nodo_inicio;
+    size_t posicion_nodo_aux = 1;
+    while(posicion_nodo_aux < posicion){
+        nodo_aux = nodo_aux->siguiente;
+        nodo_anterior = nodo_anterior->siguiente;
+        posicion_nodo_aux++;
+    }
+    nodo_anterior->siguiente = nodo_aux->siguiente;
+    free(nodo_aux);
+    lista->cantidad--;
     return 0;
 }
 
