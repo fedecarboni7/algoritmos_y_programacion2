@@ -61,9 +61,11 @@ void dadaUnaLista_siLeAgregoElementos_puedoSaberConCuantosElementosCuenta(){
   lista_t* lista = lista_crear();
   void* elemento = malloc(sizeof(char));
 
+  pa2m_afirmar(lista_vacia(lista) == true, "La lista está vacía");
   pa2m_afirmar(lista_elementos(lista) == 0, "La lista no tiene elementos o no existe");
   lista_insertar(lista, elemento);
   pa2m_afirmar(lista_elementos(lista) == 1, "La lista tiene un elemento");
+  pa2m_afirmar(lista_vacia(lista) == false, "La lista no está vacía");
   lista_insertar(lista, elemento);
   pa2m_afirmar(lista_elementos(lista) == 2, "La lista tiene dos elementos");
   lista_insertar(lista, elemento);
@@ -157,6 +159,109 @@ void dadaUnaLista_siLePasoLaPosicionDeUnElemento_seBorraElElementoDeEsaPosicionD
   lista_destruir(lista);
 }
 
+void dadaUnaLista_siTieneElementos_puedoSaberCualEsSuPrimerYultimoElemento(){
+  lista_t* lista = lista_crear();
+  void* primer_elemento = malloc(sizeof(char));
+  void* ultimo_elemento = malloc(sizeof(char));
+
+  pa2m_afirmar(lista_primero(lista) == NULL, "Si paso una lista vacía, devuelvo NULL");
+  pa2m_afirmar(lista_ultimo(lista) == NULL, "Si paso una lista vacía, devuelvo NULL");
+
+  lista_insertar(lista, primer_elemento);
+  lista_insertar(lista, ultimo_elemento);
+
+  pa2m_afirmar(lista_primero(lista) == primer_elemento, "Recibo el primer elemento de la lista");
+  pa2m_afirmar(lista_ultimo(lista) == ultimo_elemento, "Recibo el último elemento de la lista");
+
+  free(primer_elemento);
+  free(ultimo_elemento);
+  lista_destruir(lista);
+}
+
+void dadaUnaPila_siLePasoElementos_losElementosSeGuardanEnLaPila(){
+  lista_t* pila = lista_crear();
+  void* elemento = malloc(sizeof(char));
+
+  pa2m_afirmar(lista_apilar(pila, elemento) == 0, "Se pudo agregar un elemento nuevo a la pila");
+  pa2m_afirmar(lista_elementos(pila) == 1, "Se obtuvo una pila con un elemento");
+  pa2m_afirmar(lista_apilar(pila, elemento) == 0, "Se pudo agregar un elemento nuevo a la pila");
+  pa2m_afirmar(lista_elementos(pila) == 2, "Se obtuvo una pila con dos elementos");
+  pa2m_afirmar(lista_apilar(pila, elemento) == 0, "Se pudo agregar un elemento nuevo a la pila");
+  pa2m_afirmar(lista_elementos(pila) == 3, "Se obtuvo una pila con tres elementos");
+
+  free(elemento);
+  lista_destruir(pila);
+}
+
+void dadaUnaPila_siTieneElementos_puedoDesapilarCadaElemento(){
+  lista_t* pila = lista_crear();
+  void* elemento = malloc(sizeof(char));
+  lista_apilar(pila, elemento);
+  lista_apilar(pila, elemento);
+  lista_apilar(pila, elemento);
+
+  pa2m_afirmar(lista_desapilar(pila) == 0, "Se desapiló un elemento de la pila");
+  pa2m_afirmar(lista_elementos(pila) == 2, "Se obtuvo una pila con dos elementos");
+  pa2m_afirmar(lista_desapilar(pila) == 0, "Se desapiló un elemento de la pila");
+  pa2m_afirmar(lista_elementos(pila) == 1, "Se obtuvo una pila con dos elementos");
+  pa2m_afirmar(lista_desapilar(pila) == 0, "Se desapiló un elemento de la pila");
+  pa2m_afirmar(lista_elementos(pila) == 0, "Se obtuvo una pila vacía");
+  pa2m_afirmar(lista_desapilar(pila) == -1, "Si intento desapilar una pila vacía, devuelvo -1");
+
+  free(elemento);
+  lista_destruir(pila);
+}
+
+void dadaUnaPila_siTieneElementos_puedoSaberCualEsElElementoAlTope(){
+  lista_t* pila = lista_crear();
+  void* primer_elemento = malloc(sizeof(char));
+  void* ultimo_elemento = malloc(sizeof(int));
+
+  pa2m_afirmar(lista_tope(pila) == NULL, "En caso de tener una pila vacía, devuelvo NULL");
+  pa2m_afirmar(lista_apilar(pila, primer_elemento) == 0, "Se agregó un nuevo elemento de la pila");
+  pa2m_afirmar(lista_tope(pila) == primer_elemento, "Se obtuvo el último elemento de la pila");
+  pa2m_afirmar(lista_apilar(pila, ultimo_elemento) == 0, "Se agregó un nuevo elemento de la pila");
+  pa2m_afirmar(lista_tope(pila) == ultimo_elemento, "Se obtuvo el último elemento de la pila");
+
+  free(primer_elemento);
+  free(ultimo_elemento);
+  lista_destruir(pila);
+}
+
+void dadaUnaCola_siLePasoElementos_losElementosSeGuardanEnLaCola(){
+  lista_t* cola = lista_crear();
+  void* elemento = malloc(sizeof(char));
+
+  pa2m_afirmar(lista_encolar(cola, elemento) == 0, "Se pudo agregar un elemento nuevo a la cola");
+  pa2m_afirmar(lista_elementos(cola) == 1, "Se obtuvo una cola con un elemento");
+  pa2m_afirmar(lista_encolar(cola, elemento) == 0, "Se pudo agregar un elemento nuevo a la cola");
+  pa2m_afirmar(lista_elementos(cola) == 2, "Se obtuvo una cola con dos elementos");
+  pa2m_afirmar(lista_encolar(cola, elemento) == 0, "Se pudo agregar un elemento nuevo a la cola");
+  pa2m_afirmar(lista_elementos(cola) == 3, "Se obtuvo una cola con tres elementos");
+
+  free(elemento);
+  lista_destruir(cola);
+}
+
+void dadaUnaCola_siTieneElementos_puedoDesencolarCadaElemento(){
+  lista_t* cola = lista_crear();
+  void* elemento = malloc(sizeof(char));
+  lista_encolar(cola, elemento);
+  lista_encolar(cola, elemento);
+  lista_encolar(cola, elemento);
+
+  pa2m_afirmar(lista_desencolar(cola) == 0, "Se desencoló un elemento de la cola");
+  pa2m_afirmar(lista_elementos(cola) == 2, "Se obtuvo una cola con dos elementos");
+  pa2m_afirmar(lista_desencolar(cola) == 0, "Se desencoló un elemento de la cola");
+  pa2m_afirmar(lista_elementos(cola) == 1, "Se obtuvo una cola con dos elementos");
+  pa2m_afirmar(lista_desencolar(cola) == 0, "Se desencoló un elemento de la cola");
+  pa2m_afirmar(lista_elementos(cola) == 0, "Se obtuvo una cola vacía");
+  pa2m_afirmar(lista_desencolar(cola) == -1, "Si intento desacolar una cola vacía, devuelvo -1");
+
+  free(elemento);
+  lista_destruir(cola);
+}
+
 int main(){
   pa2m_nuevo_grupo("Pruebas de crear lista");
   dadoQueNecesitoUnaLista_siCreoUnaListaNueva_devuelvoUnaListaVacia();
@@ -165,7 +270,7 @@ int main(){
   dadaUnaListaVacia_siLeAgregoUnElemento_resultaEnUnaListaConUnElemento();
   dadaUnaLista_siAgregoElementos_laListaSeAgranda();
 
-  pa2m_nuevo_grupo("Pruebas de lista cantidad de elementos");
+  pa2m_nuevo_grupo("Pruebas de lista cantidad de elementos y lista vacía");
   dadaUnaLista_siLeAgregoElementos_puedoSaberConCuantosElementosCuenta();
 
   pa2m_nuevo_grupo("Pruebas de lista elemento en posición");
@@ -179,6 +284,23 @@ int main(){
 
   pa2m_nuevo_grupo("Pruebas de lista borrar de posición");
   dadaUnaLista_siLePasoLaPosicionDeUnElemento_seBorraElElementoDeEsaPosicionDeLaLista();
+
+  pa2m_nuevo_grupo("Pruebas de lista primero y lista último");
+  dadaUnaLista_siTieneElementos_puedoSaberCualEsSuPrimerYultimoElemento();
+
+  pa2m_nuevo_grupo("Pruebas de lista apilar y desapilar");
+  dadaUnaPila_siLePasoElementos_losElementosSeGuardanEnLaPila();
+  dadaUnaPila_siTieneElementos_puedoDesapilarCadaElemento();
+
+  pa2m_nuevo_grupo("Pruebas de lista tope");
+  dadaUnaPila_siTieneElementos_puedoSaberCualEsElElementoAlTope();
+
+  pa2m_nuevo_grupo("Pruebas de lista tope");
+  dadaUnaPila_siTieneElementos_puedoSaberCualEsElElementoAlTope();
+
+  pa2m_nuevo_grupo("Pruebas de lista encolar y desencolar");
+  dadaUnaCola_siLePasoElementos_losElementosSeGuardanEnLaCola();
+  dadaUnaCola_siTieneElementos_puedoDesencolarCadaElemento();
 
   return pa2m_mostrar_reporte();
 }

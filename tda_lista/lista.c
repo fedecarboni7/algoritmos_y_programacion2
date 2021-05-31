@@ -32,30 +32,6 @@ int lista_insertar(lista_t* lista, void* elemento){
     return 0;
 }
 
-int lista_insertar_primero(lista_t* lista, void* elemento){
-    if(!lista)
-        return -1;
-    if(!lista->nodo_fin){
-        nodo_t* nuevo_nodo = calloc(1, sizeof(nodo_t));
-        if(!nuevo_nodo)
-            return -1;
-        nuevo_nodo->elemento = elemento;
-        lista->nodo_inicio = nuevo_nodo;
-        lista->nodo_fin = nuevo_nodo;
-        lista->nodo_fin->siguiente = lista->nodo_inicio;
-    }
-    else{
-        nodo_t* nuevo_nodo = calloc(1, sizeof(nodo_t));
-        if(!nuevo_nodo)
-            return -1;
-        nuevo_nodo->elemento = elemento;
-        lista->nodo_inicio->siguiente = nuevo_nodo;
-        lista->nodo_inicio = nuevo_nodo;
-    }
-    lista->cantidad++;
-    return 0;
-}
-
 int lista_insertar_en_posicion(lista_t* lista, void* elemento, size_t posicion){
     if(!lista)
         return -1;
@@ -161,6 +137,8 @@ void* lista_elemento_en_posicion(lista_t* lista, size_t posicion){
 void* lista_ultimo(lista_t* lista){
     if(!lista)
         return NULL;
+    if(lista->cantidad == 0)
+        return NULL;
     return lista->nodo_fin->elemento;
 }
 
@@ -177,40 +155,30 @@ size_t lista_elementos(lista_t* lista){
 }
 
 int lista_apilar(lista_t* lista, void* elemento){
-    if(!lista)
-        return -1;
-    lista_insertar_primero(lista, elemento);
-    return 0;
+    return lista_insertar(lista, elemento);
 }
 
 int lista_desapilar(lista_t* lista){
-    if(!lista)
-        return -1;
-    lista_borrar_primero(lista);
-    return 0;
+    return lista_borrar(lista);
 }
 
 void* lista_tope(lista_t* lista){
     if(lista->cantidad == 0)
         return NULL;
-    return lista->nodo_inicio->elemento;
+    return lista->nodo_fin->elemento;
 }
 
 int lista_encolar(lista_t* lista, void* elemento){
-    if(!lista)
-        return -1;
-    lista_insertar(lista, elemento);
-    return 0;
+    return lista_insertar(lista, elemento);
 }
 
 int lista_desencolar(lista_t* lista){
-    if(!lista)
-        return -1;
-    lista_borrar_primero(lista);
-    return 0;
+    return lista_borrar_primero(lista);
 }
 
 void* lista_primero(lista_t* lista){
+    if(!lista)
+        return NULL;
     if(lista->cantidad == 0)
         return NULL;
     return lista->nodo_inicio->elemento;
