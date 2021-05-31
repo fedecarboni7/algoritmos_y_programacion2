@@ -110,6 +110,32 @@ void dadaUnaLista_siLePasoUnElementoYunaPosicion_elElementoSeAgregaEnEsaPosicion
   lista_destruir(lista);
 }
 
+void dadaUnaLista_siLaListaTieneElementos_seBorraElUltimoElementoDeLaLista(){
+  lista_t* lista = lista_crear();
+  void* elemento = malloc(sizeof(char));
+  void* otro_elemento = malloc(sizeof(int));
+
+  lista_insertar(lista, otro_elemento);
+  lista_insertar(lista, elemento);
+  lista_insertar(lista, otro_elemento);
+  lista_insertar(lista, elemento);
+  pa2m_afirmar(lista_borrar(lista) == 0, "Se borró el último elemento de la lista");
+  pa2m_afirmar(lista_elementos(lista) == 3, "La lista ahora tiene 3 elementos");
+  pa2m_afirmar(lista->nodo_fin->elemento == otro_elemento, "El último elemento de la lista es el que estaba anteúltimo");
+  pa2m_afirmar(lista_borrar(lista) == 0, "Se borró el último elemento de la lista");
+  pa2m_afirmar(lista_elementos(lista) == 2, "La lista ahora tiene 2 elementos");
+  pa2m_afirmar(lista_borrar(lista) == 0, "Se borró el último elemento de la lista");
+  pa2m_afirmar(lista_elementos(lista) == 1, "La lista ahora tiene 1 elemento");
+  pa2m_afirmar(lista->nodo_fin->elemento == otro_elemento, "El último elemento de la lista es el que estaba anteúltimo");
+  pa2m_afirmar(lista_borrar(lista) == 0, "Se borró el último elemento de la lista");
+  pa2m_afirmar(lista_elementos(lista) == 0, "La lista quedó vacía");
+  pa2m_afirmar(lista_borrar(lista) == -1, "Dada una lista sin elementos devuelvo -1");
+
+  free(elemento);
+  free(otro_elemento);
+  lista_destruir(lista);
+}
+
 void dadaUnaLista_siLePasoLaPosicionDeUnElemento_seBorraElElementoDeEsaPosicionDeLaLista(){
   lista_t* lista = lista_crear();
   void* elemento = malloc(sizeof(char));
@@ -131,7 +157,6 @@ void dadaUnaLista_siLePasoLaPosicionDeUnElemento_seBorraElElementoDeEsaPosicionD
   lista_destruir(lista);
 }
 
-
 int main(){
   pa2m_nuevo_grupo("Pruebas de crear lista");
   dadoQueNecesitoUnaLista_siCreoUnaListaNueva_devuelvoUnaListaVacia();
@@ -149,6 +174,9 @@ int main(){
   pa2m_nuevo_grupo("Pruebas de lista insertar en posición");
   dadaUnaLista_siLePasoUnElementoYunaPosicion_elElementoSeAgregaEnEsaPosicionDeLaLista();
   
+  pa2m_nuevo_grupo("Pruebas de lista borrar");
+  dadaUnaLista_siLaListaTieneElementos_seBorraElUltimoElementoDeLaLista();
+
   pa2m_nuevo_grupo("Pruebas de lista borrar de posición");
   dadaUnaLista_siLePasoLaPosicionDeUnElemento_seBorraElElementoDeEsaPosicionDeLaLista();
 
