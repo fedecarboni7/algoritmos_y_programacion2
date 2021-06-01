@@ -262,6 +262,23 @@ void dadaUnaCola_siTieneElementos_puedoDesencolarCadaElemento(){
   lista_destruir(cola);
 }
 
+void dadaUnaListaConElementos_siUsoElIteradorInterno_puedoObtenerTodosLosElementos(){
+  lista_t* lista = lista_crear();
+  void* elemento = malloc(sizeof(char));
+  lista_insertar(lista, elemento);
+  lista_insertar(lista, elemento);
+  lista_insertar(lista, elemento);
+  lista_insertar(lista, elemento);
+
+  lista_iterador_t* iterador = lista_iterador_crear(lista);
+
+  size_t cantidad_elementos_iterados = lista_con_cada_elemento(lista, lista_iterador_tiene_siguiente(iterador), lista_iterador_elemento_actual(iterador));
+
+  free(elemento);
+  lista_destruir(lista);
+}
+
+
 int main(){
   pa2m_nuevo_grupo("Pruebas de crear lista");
   dadoQueNecesitoUnaLista_siCreoUnaListaNueva_devuelvoUnaListaVacia();
@@ -301,6 +318,9 @@ int main(){
   pa2m_nuevo_grupo("Pruebas de lista encolar y desencolar");
   dadaUnaCola_siLePasoElementos_losElementosSeGuardanEnLaCola();
   dadaUnaCola_siTieneElementos_puedoDesencolarCadaElemento();
+
+  pa2m_nuevo_grupo("Pruebas iterador interno");
+  dadaUnaListaConElementos_siUsoElIteradorInterno_puedoObtenerTodosLosElementos();
 
   return pa2m_mostrar_reporte();
 }
