@@ -274,6 +274,8 @@ void dadaUnaListaConElementos_siUsoElIteradorInterno_puedoObtenerTodosLosElement
 
   size_t cantidad_elementos_iterados = lista_con_cada_elemento(lista, lista_iterador_tiene_siguiente(iterador), lista_iterador_elemento_actual(iterador));
 
+  pa2m_afirmar(cantidad_elementos_iterados == 4, "La cantidad de elementos iterados es igual a 4");
+
   free(elemento);
   lista_destruir(lista);
 }

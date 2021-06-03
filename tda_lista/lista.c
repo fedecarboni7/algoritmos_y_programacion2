@@ -191,25 +191,51 @@ void lista_destruir(lista_t* lista){
 }
 
 lista_iterador_t* lista_iterador_crear(lista_t* lista){
+    if(!lista)
         return NULL;
+    lista_iterador_t* iterador = calloc(1, sizeof(lista_iterador_t));
+    if(!iterador)
+        return NULL;
+    iterador->lista = lista;
+    iterador->corriente = lista->nodo_inicio;
+    return iterador;
 }
 
 bool lista_iterador_tiene_siguiente(lista_iterador_t* iterador){
-    return false;
+    if(!iterador || !iterador->corriente->siguiente)
+        return false;
+    return true;
 }
 
 bool lista_iterador_avanzar(lista_iterador_t* iterador){
-    return false;
+    if(!iterador || !iterador->corriente->siguiente)
+        return false;
+    iterador->corriente = iterador->corriente->siguiente;
+    return true;
 }
 
 void* lista_iterador_elemento_actual(lista_iterador_t* iterador){
-    return NULL;
+    if(!iterador->corriente || !iterador)
+        return NULL;
+    return iterador->corriente;
 }
 
 void lista_iterador_destruir(lista_iterador_t* iterador){
-
+    if(iterador->lista)
+        lista_destruir(iterador->lista);
+    free(iterador);
 }
 
 size_t lista_con_cada_elemento(lista_t* lista, bool (*funcion)(void*, void*), void *contexto){
-    return 0;
+    if(!lista)
+        return 0;
+    
+    nodo_t* actual = lista->nodo_inicio;
+    size_t i;
+    for(i = 0; actual->siguiente; actual = actual->siguiente){
+        void* elemento = actual->elemento;
+        funcion(elemento, contexto);
+        i++;
+    }
+    return i;
 }
