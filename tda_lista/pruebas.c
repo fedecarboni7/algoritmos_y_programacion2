@@ -1,5 +1,6 @@
 #include "lista.h"
 #include "pa2mm.h"
+#include <stdbool.h>
 
 void dadoQueNecesitoUnaLista_siCreoUnaListaNueva_devuelvoUnaListaVacia(){
   lista_t* nueva_lista = lista_crear();
@@ -154,6 +155,8 @@ void dadaUnaLista_siLePasoLaPosicionDeUnElemento_seBorraElElementoDeEsaPosicionD
   pa2m_afirmar(lista_elementos(lista) == 1, "La lista ahora tiene 1 elemento");
   pa2m_afirmar(lista_borrar_de_posicion(lista, 0) == 0, "Se borró el primer elemento de la lista");
   pa2m_afirmar(lista_elementos(lista) == 0, "La lista quedó vacía");
+  pa2m_afirmar(lista_borrar_de_posicion(lista, 50) == -1, "Borrar en una posicion arbitraria de una lista sin elementos devuelve error");
+
 
   free(elemento);
   lista_destruir(lista);
@@ -256,30 +259,11 @@ void dadaUnaCola_siTieneElementos_puedoDesencolarCadaElemento(){
   pa2m_afirmar(lista_elementos(cola) == 1, "Se obtuvo una cola con dos elementos");
   pa2m_afirmar(lista_desencolar(cola) == 0, "Se desencoló un elemento de la cola");
   pa2m_afirmar(lista_elementos(cola) == 0, "Se obtuvo una cola vacía");
-  pa2m_afirmar(lista_desencolar(cola) == -1, "Si intento desacolar una cola vacía, devuelvo -1");
+  pa2m_afirmar(lista_desencolar(cola) == -1, "Si intento desencolar una cola vacía, devuelvo -1");
 
   free(elemento);
   lista_destruir(cola);
 }
-
-void dadaUnaListaConElementos_siUsoElIteradorInterno_puedoObtenerTodosLosElementos(){
-  lista_t* lista = lista_crear();
-  void* elemento = malloc(sizeof(char));
-  lista_insertar(lista, elemento);
-  lista_insertar(lista, elemento);
-  lista_insertar(lista, elemento);
-  lista_insertar(lista, elemento);
-
-  lista_iterador_t* iterador = lista_iterador_crear(lista);
-
-  size_t cantidad_elementos_iterados = lista_con_cada_elemento(lista, lista_iterador_tiene_siguiente(iterador), lista_iterador_elemento_actual(iterador));
-
-  pa2m_afirmar(cantidad_elementos_iterados == 4, "La cantidad de elementos iterados es igual a 4");
-
-  free(elemento);
-  lista_destruir(lista);
-}
-
 
 int main(){
   pa2m_nuevo_grupo("Pruebas de crear lista");
@@ -320,9 +304,6 @@ int main(){
   pa2m_nuevo_grupo("Pruebas de lista encolar y desencolar");
   dadaUnaCola_siLePasoElementos_losElementosSeGuardanEnLaCola();
   dadaUnaCola_siTieneElementos_puedoDesencolarCadaElemento();
-
-  pa2m_nuevo_grupo("Pruebas iterador interno");
-  dadaUnaListaConElementos_siUsoElIteradorInterno_puedoObtenerTodosLosElementos();
-
+  
   return pa2m_mostrar_reporte();
 }
