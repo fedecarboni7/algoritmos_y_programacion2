@@ -1,4 +1,7 @@
 #include "tp0.h"
+#include <stdio.h>
+#include <stdlib.h>
+
 
 /* *****************************************************************
  *                     FUNCIONES A COMPLETAR                       *
@@ -6,6 +9,11 @@
  * *****************************************************************/
 
 void swap(int *x, int *y) {
+    int *z = malloc(sizeof(int*));
+    *z = *x;
+    *x = *y;
+    *y = *z;
+    free(z);
 }
 
 
