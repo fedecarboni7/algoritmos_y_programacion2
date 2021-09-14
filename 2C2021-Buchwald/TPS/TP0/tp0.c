@@ -9,11 +9,9 @@
  * *****************************************************************/
 
 void swap(int *x, int *y) {
-    int *z = malloc(sizeof(int*));
-    *z = *x;
+    int z = *x;
     *x = *y;
-    *y = *z;
-    free(z);
+    *y = z;
 }
 
 
