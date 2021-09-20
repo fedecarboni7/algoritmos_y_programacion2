@@ -1,10 +1,32 @@
 #include "vector.h"
-
+#include <stdio.h>
 
 // Funciones a implementar.
 
-// ...
+void vector_destruir(vector_t *vector){
+    for(int i = 0; i < vector->tam; i++){
+        free(vector->datos[i]);
+    }
+    free(vector);
+}
 
+bool vector_obtener(vector_t *vector, size_t pos, int *valor){
+
+}
+
+bool vector_guardar(vector_t *vector, size_t pos, int valor){
+    if(pos >= vector->tam)
+        return false;
+    vector->datos[pos] = valor;
+    return ;
+}
+
+size_t vector_largo(vector_t *vector){
+     if (vector == NULL) {
+        return NULL;
+    }
+    return vector->tam;
+}
 
 // Funciones ya implementadas.
 
