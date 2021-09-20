@@ -3,30 +3,25 @@
 
 // Funciones a implementar.
 
-void vector_destruir(vector_t *vector){
-    for(int i = 0; i < vector->tam; i++){
-        free(vector->datos[i]);
-    }
+void vector_destruir(vector_t *vector) {
+    free(vector->datos);
     free(vector);
 }
 
-bool vector_obtener(vector_t *vector, size_t pos, int *valor){
-    if(pos >= vector->tam)
-        return false;
+bool vector_obtener(vector_t *vector, size_t pos, int *valor) {
+    if (pos >= vector->tam) return false;
     *valor = vector->datos[pos];
     return true;
 }
 
-bool vector_guardar(vector_t *vector, size_t pos, int valor){
-    if(pos >= vector->tam)
-        return false;
+bool vector_guardar(vector_t *vector, size_t pos, int valor) {
+    if (pos >= vector->tam) return false;
     vector->datos[pos] = valor;
     return true;
 }
 
-size_t vector_largo(vector_t *vector){
-    if (vector == NULL)
-        return NULL;
+size_t vector_largo(vector_t *vector) {
+    if (vector == NULL) return 0;
     return vector->tam;
 }
 
