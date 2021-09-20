@@ -14,17 +14,15 @@ void swap(int *x, int *y) {
     *y = z;
 }
 
-
 int maximo(int vector[], int n) {
     if (n == 0) return -1;
-    int max = vector[0];
+    int max = 0;
     for (int i = 0; i < n; i++) {
         if (vector[i] > vector[max])
             max = i;
     }
     return max;
 }
-
 
 int comparar(int vector1[], int n1, int vector2[], int n2) {
     int n = 0;
