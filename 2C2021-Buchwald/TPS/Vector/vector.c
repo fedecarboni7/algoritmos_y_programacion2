@@ -1,5 +1,4 @@
 #include "vector.h"
-#include <stdio.h>
 
 // Funciones a implementar.
 
@@ -21,7 +20,6 @@ bool vector_guardar(vector_t *vector, size_t pos, int valor) {
 }
 
 size_t vector_largo(vector_t *vector) {
-    if (vector == NULL) return 0;
     return vector->tam;
 }
 

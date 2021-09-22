@@ -1,5 +1,4 @@
 #include "pila.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 /* Definición del struct pila proporcionado por la cátedra.
