@@ -10,9 +10,9 @@ static void prueba_pila_vacia(void) {
     print_test("crear pila", pila != NULL);
     print_test("la pila está vacía" , pila_esta_vacia(pila) == true);
     print_test("desapilar una pila vacía devuelve NULL" , pila_desapilar(pila) == NULL);
+    print_test("ver el tope de una pila vacía devuelve NULL" , pila_ver_tope(pila) == NULL);
 
-    pila_desapilar(pila);
-
+    pila_destruir(pila);
 }
 
 

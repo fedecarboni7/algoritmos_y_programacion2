@@ -49,7 +49,7 @@ bool pila_apilar(pila_t *pila, void *valor){
 
 void *pila_ver_tope(const pila_t *pila){
     if (pila_esta_vacia(pila)) return NULL;
-    return pila->datos[-1];
+    return pila->datos[pila->cantidad - 1];
 }
 
 void *pila_desapilar(pila_t *pila){
