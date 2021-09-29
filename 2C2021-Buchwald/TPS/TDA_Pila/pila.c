@@ -27,8 +27,6 @@ pila_t *pila_crear(void){
 }
 
 void pila_destruir(pila_t *pila){
-    while (!pila_esta_vacia(pila))
-        pila_desapilar(pila);
     free(pila->datos);
     free(pila);
 }
@@ -37,27 +35,38 @@ bool pila_esta_vacia(const pila_t *pila){
     return pila->cantidad == 0;
 }
 
-bool pila_apilar(pila_t *pila, void *valor){
-    pila->datos[pila->cantidad] = valor;
-    pila->cantidad++;
-    if (pila->cantidad == pila->capacidad)
-        pila->capacidad *= 2;
-    pila->datos = realloc(pila->datos, pila->capacidad * sizeof(void*));
-    if (pila->datos == NULL) return false;
-    return true;
-}
-
 void *pila_ver_tope(const pila_t *pila){
     if (pila_esta_vacia(pila)) return NULL;
     return pila->datos[pila->cantidad - 1];
 }
 
+bool pila_redimensionar(pila_t *pila) {
+    if (pila->cantidad == pila->capacidad)
+        pila->capacidad *= 2;
+    else {
+        pila->capacidad /= 2;
+    }
+    pila->datos = realloc(pila->datos, pila->capacidad * sizeof(void*));
+    if (pila->datos == NULL) return false;
+    return true;
+}
+
+bool pila_apilar(pila_t *pila, void *valor){
+    pila->datos[pila->cantidad] = valor;
+    pila->cantidad++;
+    if (pila->cantidad == pila->capacidad) {
+        if(!pila_redimensionar(pila))
+        return false;
+    }
+    return true;
+}
+
 void *pila_desapilar(pila_t *pila){
     if (pila_esta_vacia(pila)) return NULL;
     pila->cantidad--;
-    if (pila->cantidad * 4 <= pila->capacidad && pila->capacidad >= 20)
-        pila->capacidad /= 2;
-    pila->datos = realloc(pila->datos, pila->capacidad * sizeof(void*));
-    if (pila->datos == NULL) return NULL;
+    if (pila->cantidad * 4 <= pila->capacidad && pila->capacidad >= 20){
+        if(!pila_redimensionar(pila))
+        return NULL;
+    }
     return pila->datos[pila->cantidad];
 }
