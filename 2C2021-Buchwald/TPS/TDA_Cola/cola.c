@@ -29,7 +29,8 @@ cola_t *cola_crear(void) {
 }
 
 void cola_destruir(cola_t *cola, void (*destruir_dato)(void *)) {
-
+    
+    free(cola);
 }
 
 bool cola_esta_vacia(const cola_t *cola) {
