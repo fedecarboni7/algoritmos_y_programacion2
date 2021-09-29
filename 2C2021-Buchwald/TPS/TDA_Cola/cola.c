@@ -22,7 +22,9 @@ typedef struct nodo {
 
 cola_t *cola_crear(void) {
     cola_t *cola = malloc(sizeof(cola_t));
-    if (!cola) return NULL;
+    if(!cola) return NULL;
+    cola->nodo_inicio = NULL;
+    cola->nodo_fin = NULL;
     return cola;
 }
 
@@ -63,6 +65,10 @@ void *cola_desencolar(cola_t *cola) {
     if(cola_esta_vacia(cola)) return NULL;
     void* dato_anterior = cola->nodo_inicio->dato;
     nodo_t* nodo_aux = cola->nodo_inicio;
+    if(cola->nodo_inicio == cola->nodo_fin) {
+        free(nodo_aux);
+        return dato_anterior;
+    }
     cola->nodo_inicio = cola->nodo_inicio->prox;
     free(nodo_aux);
     return dato_anterior;
