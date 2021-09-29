@@ -60,9 +60,7 @@ bool pila_apilar(pila_t *pila, void *valor) {
 void *pila_desapilar(pila_t *pila) {
     if (pila_esta_vacia(pila)) return NULL;
     pila->cantidad--;
-    if (pila->cantidad * 4 <= pila->capacidad && pila->capacidad >= CAP_INICIAL * 2) {
-        void *dato = pila->datos[pila->cantidad];
-        if (!pila_redimensionar(pila, pila->capacidad / 2)) return dato;
-    }
+    if (pila->cantidad * 4 <= pila->capacidad && pila->capacidad >= CAP_INICIAL * 2)
+        pila_redimensionar(pila, pila->capacidad / 2);
     return pila->datos[pila->cantidad];
 }
