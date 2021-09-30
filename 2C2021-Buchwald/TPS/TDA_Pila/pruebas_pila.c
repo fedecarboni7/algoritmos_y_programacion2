@@ -49,26 +49,23 @@ static void prueba_de_volumen(void) {
 
     pila_t *pila = pila_crear();
     int valor;
+    bool resultado = true;
 
     for (int i = 0; i <= 999; i++) {
-        if (i == 999) {
-            print_test("Puedo apilar todos los elementos", pila_apilar(pila, &valor) && pila_ver_tope(pila) == &valor);
-        }
-        else if (!pila_apilar(pila, &valor) || pila_ver_tope(pila) != &valor) {
-            print_test("La prueba falló", false);
-            break;
-        }
+        resultado = pila_apilar(pila, &valor) && pila_ver_tope(pila) == &valor;
+        if (!resultado) break;
     }
+    print_test("Puedo apilar todos los elementos", resultado);
 
     for (int i = 999; i >= 0; i--) {
         if (i == 0) {
-            print_test("Puedo desapilar todos los elementos", pila_desapilar(pila) == &valor && pila_ver_tope(pila) == NULL);
-        }
-        else if (pila_ver_tope(pila) != &valor || pila_desapilar(pila) != &valor) {
-            print_test("La prueba falló", false);
+            resultado = pila_desapilar(pila) == &valor && pila_ver_tope(pila) == NULL && pila_esta_vacia(pila);
             break;
         }
+        resultado = pila_desapilar(pila) == &valor && pila_ver_tope(pila) == &valor;
+        if (!resultado) break;
     }
+    print_test("Puedo desapilar todos los elementos", resultado);
 
     pila_destruir(pila);
 }
