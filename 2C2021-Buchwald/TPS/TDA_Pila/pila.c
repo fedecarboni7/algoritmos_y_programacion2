@@ -42,10 +42,10 @@ void *pila_ver_tope(const pila_t *pila) {
 }
 
 bool pila_redimensionar(pila_t *pila, size_t nueva_capacidad) {
-    pila->capacidad = nueva_capacidad;
-    void** nuevos_datos = realloc(pila->datos, pila->capacidad * sizeof(void*));
+    void** nuevos_datos = realloc(pila->datos, nueva_capacidad * sizeof(void*));
     if (!nuevos_datos) return false;
     pila->datos = nuevos_datos;
+    pila->capacidad = nueva_capacidad;
     return true;
 }
 
