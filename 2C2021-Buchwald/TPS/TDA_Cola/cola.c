@@ -38,10 +38,10 @@ bool cola_esta_vacia(const cola_t *cola) {
 }
 
 bool cola_encolar(cola_t *cola, void *valor) {
-    if(!cola) return false;
-    if(!cola->nodo_inicio) {
+    if (!cola) return false;
+    if (cola_esta_vacia(cola)) {
         nodo_t* nodo = calloc(1, sizeof(nodo_t));
-        if(!nodo) return false;
+        if (!nodo) return false;
         nodo->dato = valor;
         cola->nodo_inicio = nodo;
         cola->nodo_fin = nodo;
@@ -49,7 +49,7 @@ bool cola_encolar(cola_t *cola, void *valor) {
     }
     else {
         nodo_t* nodo = calloc(1, sizeof(nodo_t));
-        if(!nodo) return false;
+        if (!nodo) return false;
         nodo->dato = valor;
         cola->nodo_fin->prox = nodo;
         cola->nodo_fin = nodo;
@@ -58,15 +58,15 @@ bool cola_encolar(cola_t *cola, void *valor) {
 }
 
 void *cola_ver_primero(const cola_t *cola) {
-    if(cola_esta_vacia(cola)) return NULL;
+    if (cola_esta_vacia(cola)) return NULL;
     return cola->nodo_inicio->dato;
 }
 
 void *cola_desencolar(cola_t *cola) {
-    if(cola_esta_vacia(cola)) return NULL;
+    if (cola_esta_vacia(cola)) return NULL;
     void* dato_anterior = cola->nodo_inicio->dato;
     nodo_t* nodo_aux = cola->nodo_inicio;
-    if(cola->nodo_inicio == cola->nodo_fin) {
+    if (cola->nodo_inicio == cola->nodo_fin) {
         free(nodo_aux);
         return dato_anterior;
     }
