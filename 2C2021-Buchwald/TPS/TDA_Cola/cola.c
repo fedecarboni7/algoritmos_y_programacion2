@@ -3,10 +3,10 @@
 
 // Definición del struct cola.
 
-typedef struct cola {
-    nodo_t* nodo_inicio;
-    nodo_t* nodo_fin;
-} cola_t;
+struct cola {
+    struct nodo* nodo_inicio;
+    struct nodo* nodo_fin;
+};
 
 // Definición del struct nodo.
 
@@ -29,7 +29,9 @@ cola_t *cola_crear(void) {
 }
 
 void cola_destruir(cola_t *cola, void (*destruir_dato)(void *)) {
-    
+    while (!cola_esta_vacia(cola)) {
+        cola_desencolar(cola);
+    }
     free(cola);
 }
 
