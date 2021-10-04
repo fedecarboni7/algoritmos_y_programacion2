@@ -30,7 +30,8 @@ cola_t *cola_crear(void) {
 
 void cola_destruir(cola_t *cola, void (*destruir_dato)(void *)) {
     while (!cola_esta_vacia(cola)) {
-        cola_desencolar(cola);
+        void *elemento = cola_desencolar(cola);
+        if (destruir_dato) destruir_dato(elemento);
     }
     free(cola);
 }

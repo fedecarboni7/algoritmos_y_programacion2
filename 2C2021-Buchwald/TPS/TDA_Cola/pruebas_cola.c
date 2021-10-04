@@ -80,11 +80,30 @@ static void prueba_encolar_NULL(void) {
     cola_destruir(cola, NULL);
 }
 
+void pila_destruir_wrapper(void* pila) {
+    pila_destruir(pila);
+}
+
+static void prueba_destruccion(void) {
+    printf("\nINICIO DE PRUEBAS DESTRUCCIÓN\n");
+
+    pila_t *pila = pila_crear();
+    cola_t *cola = cola_crear();
+    int valor;
+
+    print_test("Agrego elementos a una pila", pila_apilar(pila, &valor) && pila_apilar(pila, &valor) && pila_apilar(pila, &valor));
+    print_test("Encolo una pila que tiene elementos", cola_encolar(cola, pila));
+    print_test("El primer elemento es la pila", cola_ver_primero(cola) == pila);
+
+    cola_destruir(cola, pila_destruir_wrapper);
+}
+
 void pruebas_cola_estudiante() {
     prueba_cola_vacia();
     prueba_encolar_elementos();
     prueba_de_volumen();
     prueba_encolar_NULL();
+    prueba_destruccion();
 }
 
 /*
