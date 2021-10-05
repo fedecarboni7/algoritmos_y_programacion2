@@ -1,0 +1,7 @@
+Implementar la primitiva de la pila void** pila_multitop(const pila_t* pila, size_t n) que 
+devuelve un arreglo de tamaño nn con los nn topes de la pila (los primeros nn elementos si 
+estos fueran desapilados), sin utilizar estructuras auxiliares. Completar el arreglo a 
+devolver con NULL cuando el nn recibido por parámetro sea mayor a la cantidad de elementos 
+de la pila.
+
+Indicar el orden de complejidad de la primitiva.
