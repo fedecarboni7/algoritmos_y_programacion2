@@ -26,6 +26,14 @@ cola_t *cola_crear(void) {
     return cola;
 }
 
+nodo_t* nodo_crear(void* valor) {
+    nodo_t* nodo = malloc(sizeof(nodo_t));
+    if (!nodo) return NULL;
+    nodo->dato = valor;
+    nodo->prox = NULL;
+    return nodo;
+}
+
 void cola_destruir(cola_t *cola, void (*destruir_dato)(void *)) {
     while (!cola_esta_vacia(cola)) {
         void *elemento = cola_desencolar(cola);
@@ -71,12 +79,4 @@ void *cola_desencolar(cola_t *cola) {
     cola->nodo_inicio = cola->nodo_inicio->prox;
     free(nodo_aux);
     return dato_anterior;
-}
-
-nodo_t* nodo_crear(void* valor) {
-    nodo_t* nodo = malloc(sizeof(nodo_t));
-    if (!nodo) return NULL;
-    nodo->dato = valor;
-    nodo->prox = NULL;
-    return nodo;
 }
