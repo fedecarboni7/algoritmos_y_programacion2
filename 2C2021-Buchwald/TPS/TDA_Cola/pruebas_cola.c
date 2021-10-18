@@ -21,16 +21,15 @@ static void prueba_encolar_elementos(void) {
     printf("\nINICIO DE PRUEBAS ENCOLAR y DESENCOLAR ELEMENTOS\n");
 
     cola_t *cola = cola_crear();
-    int valor;
-    char otro_valor;
+    int arreglo[] = {2, 5, 6};
 
-    print_test("Encolar 1 elemento", cola_encolar(cola, &valor));
-    print_test("El elemento encolado es el primero", cola_ver_primero(cola) == &valor);
-    print_test("Encolar 2 elementos", cola_encolar(cola, &otro_valor));
-    print_test("Encolar 3 elementos", cola_encolar(cola, &valor));
-    print_test("Desencolo el elemento 3", cola_desencolar(cola) == &valor);
-    print_test("Desencolo el elemento 2", cola_desencolar(cola) == &otro_valor);
-    print_test("Desencolo el elemento 1", cola_desencolar(cola) == &valor);
+    print_test("Encolar 1 elemento", cola_encolar(cola, &arreglo[0]));
+    print_test("El elemento encolado es el primero", cola_ver_primero(cola) == &arreglo[0]);
+    print_test("Encolar 2 elementos", cola_encolar(cola, &arreglo[1]));
+    print_test("Encolar 3 elementos", cola_encolar(cola, &arreglo[2]));
+    print_test("Desencolo el elemento 3", cola_desencolar(cola) == &arreglo[2]);
+    print_test("Desencolo el elemento 2", cola_desencolar(cola) == &arreglo[1]);
+    print_test("Desencolo el elemento 1", cola_desencolar(cola) == &arreglo[0]);
     print_test("La cola está vacía", cola_esta_vacia(cola));
     
     printf("\nCONDICIÓN DE BORDE\n");
