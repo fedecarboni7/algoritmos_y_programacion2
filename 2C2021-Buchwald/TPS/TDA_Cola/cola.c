@@ -50,13 +50,13 @@ bool cola_encolar(cola_t *cola, void *valor) {
     if (!nodo) return false;
     if (cola_esta_vacia(cola)) {
         cola->nodo_inicio = nodo;
-        cola->nodo_fin = nodo;
         cola->nodo_inicio->prox = cola->nodo_fin;
     }
     else {
         cola->nodo_fin->prox = nodo;
-        cola->nodo_fin = nodo;
     }
+    cola->nodo_fin = nodo;
+    cola->nodo_fin->prox = NULL;
     return true;
 }
 
