@@ -22,7 +22,6 @@ typedef struct nodo {
 
 cola_t *cola_crear(void) {
     cola_t *cola = calloc(1, sizeof(cola_t));
-    if (!cola) return NULL;
     return cola;
 }
 

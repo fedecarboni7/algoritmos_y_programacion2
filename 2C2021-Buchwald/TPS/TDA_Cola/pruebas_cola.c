@@ -27,9 +27,9 @@ static void prueba_encolar_elementos(void) {
     print_test("El elemento encolado es el primero", cola_ver_primero(cola) == &arreglo[0]);
     print_test("Encolar 2 elementos", cola_encolar(cola, &arreglo[1]));
     print_test("Encolar 3 elementos", cola_encolar(cola, &arreglo[2]));
-    print_test("Desencolo el elemento 3", cola_desencolar(cola) == &arreglo[2]);
-    print_test("Desencolo el elemento 2", cola_desencolar(cola) == &arreglo[1]);
     print_test("Desencolo el elemento 1", cola_desencolar(cola) == &arreglo[0]);
+    print_test("Desencolo el elemento 2", cola_desencolar(cola) == &arreglo[1]);
+    print_test("Desencolo el elemento 3", cola_desencolar(cola) == &arreglo[2]);
     print_test("La cola está vacía", cola_esta_vacia(cola));
     
     printf("\nCONDICIÓN DE BORDE\n");
