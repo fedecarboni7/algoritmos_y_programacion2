@@ -60,8 +60,7 @@ bool cola_encolar(cola_t *cola, void *valor) {
 }
 
 void *cola_ver_primero(const cola_t *cola) {
-    if (cola_esta_vacia(cola)) return NULL;
-    return cola->nodo_inicio->dato;
+    return cola_esta_vacia(cola) ? NULL : cola->nodo_inicio->dato;
 }
 
 void *cola_desencolar(cola_t *cola) {
