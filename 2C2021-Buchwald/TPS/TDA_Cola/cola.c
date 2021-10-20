@@ -69,12 +69,12 @@ void *cola_desencolar(cola_t *cola) {
     void* dato_anterior = cola->nodo_inicio->dato;
     nodo_t* nodo_aux = cola->nodo_inicio;
     if (cola->nodo_inicio == cola->nodo_fin) {
-        free(nodo_aux);
         cola->nodo_inicio = NULL;
         cola->nodo_fin = NULL;
-        return dato_anterior;
     }
-    cola->nodo_inicio = cola->nodo_inicio->prox;
+    else {
+        cola->nodo_inicio = cola->nodo_inicio->prox;
+    }
     free(nodo_aux);
     return dato_anterior;
 }
