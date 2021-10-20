@@ -55,7 +55,6 @@ bool cola_encolar(cola_t *cola, void *valor) {
         cola->nodo_fin->prox = nodo;
     }
     cola->nodo_fin = nodo;
-    cola->nodo_fin->prox = NULL;
     return true;
 }
 
